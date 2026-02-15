@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Base64 Encoder Decoder Online — DevToolBox</title>
+<meta name="description" content="Free online Base64 encoder and decoder. Encode text to Base64 or decode Base64 to text instantly.">
+<meta name="keywords" content="base64 decode, base64 encode, base64 online, base64 decoder, base64 encoder">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/base64.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div class="toolbar" id="toolbar"></div>
+<div class="split">
+  <div><label id="lbl-in"></label><textarea id="input" spellcheck="false"></textarea></div>
+  <div><label id="lbl-out"></label><textarea id="output" spellcheck="false" readonly></textarea></div>
+</div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function doEncode(){try{$('#output').value=btoa(unescape(encodeURIComponent($('#input').value)))}catch(e){$('#output').value='Error: '+e.message}}
+function doDecode(){try{$('#output').value=decodeURIComponent(escape(atob($('#input').value.trim())))}catch(e){$('#output').value='Error: '+e.message}}
+function renderPage(){
+  renderNav('base64');$('#title').textContent=t('base64Title');
+  $('#lbl-in').textContent=t('input');$('#lbl-out').textContent=t('output');
+  $('#input').placeholder=t('textInput');
+  $('#toolbar').innerHTML=`
+    <button class="btn" onclick="doEncode()">${t('encode')}</button>
+    <button class="btn btn-secondary" onclick="doDecode()">${t('decode')}</button>
+    <button class="btn btn-copy" onclick="copyText($('#output').value)">${t('copy')}</button>
+    <button class="btn btn-secondary" onclick="$('#input').value='';$('#output').value=''">${t('clear')}</button>`;
+  renderDonate();renderFooter();
+}
+renderPage();
+</script></body></html>

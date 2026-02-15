@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text Diff Tool Online — DevToolBox</title>
+<meta name="description" content="Free online text diff tool. Compare two texts side by side with highlighted differences.">
+<meta name="keywords" content="text diff online, compare text, diff tool, text comparison, online diff">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/diff.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div class="toolbar" id="toolbar"></div>
+<div class="split">
+  <div><label id="lbl-orig"></label><textarea id="original" spellcheck="false"></textarea></div>
+  <div><label id="lbl-mod"></label><textarea id="modified" spellcheck="false"></textarea></div>
+</div>
+<h2 id="lbl-result" style="margin-top:16px"></h2>
+<div class="output" id="output" style="line-height:1.8"></div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function doDiff(){
+  const a=$('#original').value.split('\n'),b=$('#modified').value.split('\n');
+  const max=Math.max(a.length,b.length);let html='';
+  // Simple line-by-line diff with LCS
+  const lcs=getLCS(a,b);let ai=0,bi=0,li=0;
+  while(ai<a.length||bi<b.length){
+    if(li<lcs.length&&ai<a.length&&a[ai]===lcs[li]&&bi<b.length&&b[bi]===lcs[li]){
+      html+=`<div>${esc(a[ai])}</div>`;ai++;bi++;li++;
+    }else if(li<lcs.length&&bi<b.length&&b[bi]===lcs[li]){
+      html+=`<div class="diff-del">- ${esc(a[ai]||'')}</div>`;ai++;
+    }else if(li<lcs.length&&ai<a.length&&a[ai]===lcs[li]){
+      html+=`<div class="diff-add">+ ${esc(b[bi]||'')}</div>`;bi++;
+    }else{
+      if(ai<a.length){html+=`<div class="diff-del">- ${esc(a[ai])}</div>`;ai++}
+      if(bi<b.length){html+=`<div class="diff-add">+ ${esc(b[bi])}</div>`;bi++}
+    }
+  }
+  $('#output').innerHTML=html||'<span style="color:var(--text2)">No differences</span>';
+}
+function getLCS(a,b){
+  const m=a.length,n=b.length,dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const res=[];let i=m,j=n;while(i>0&&j>0){if(a[i-1]===b[j-1]){res.unshift(a[i-1]);i--;j--}else if(dp[i-1][j]>dp[i][j-1])i--;else j--}
+  return res;
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function renderPage(){
+  renderNav('diff');$('#title').textContent=t('diffTitle');
+  $('#lbl-orig').textContent=t('original');$('#lbl-mod').textContent=t('modified');
+  $('#lbl-result').textContent=t('compare');
+  $('#original').placeholder=t('originalPh');$('#modified').placeholder=t('modifiedPh');
+  $('#toolbar').innerHTML=`<button class="btn" onclick="doDiff()">${t('compare')}</button><button class="btn btn-secondary" onclick="$('#original').value='';$('#modified').value='';$('#output').innerHTML=''">${t('clear')}</button>`;
+  renderDonate();renderFooter();
+}
+$('#original').addEventListener('input',doDiff);$('#modified').addEventListener('input',doDiff);
+renderPage();
+</script></body></html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DevToolBox 🛠️ — Free Online Developer Tools</title>
+<meta name="description" content="Free online developer tools: JSON formatter, regex tester, Base64 encoder, hash generator, timestamp converter, text diff, cron builder. No ads, no tracking.">
+<meta name="keywords" content="json formatter online, regex tester, base64 decode, hash generator, timestamp converter, text diff, cron expression, developer tools">
+<meta property="og:title" content="DevToolBox — Free Online Developer Tools">
+<meta property="og:description" content="JSON formatter, regex tester, Base64, hash, timestamp, diff, cron — all free, no ads.">
+<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div class="grid" id="grid"></div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+const tools=[
+  {href:'json.html',icon:'{ }',key:'json',desc:'jsonDesc'},
+  {href:'regex.html',icon:'.*',key:'regex',desc:'regexDesc'},
+  {href:'base64.html',icon:'b64',key:'base64',desc:'base64Desc'},
+  {href:'hash.html',icon:'#',key:'hash',desc:'hashDesc'},
+  {href:'timestamp.html',icon:'⏱',key:'timestamp',desc:'timestampDesc'},
+  {href:'diff.html',icon:'±',key:'diff',desc:'diffDesc'},
+  {href:'cron.html',icon:'⏰',key:'cron',desc:'cronDesc'},
+];
+function renderPage(){
+  renderNav('tools');$('#title').textContent=t('tagline');
+  $('#grid').innerHTML=tools.map(x=>`<a href="${x.href}" style="text-decoration:none"><div class="card"><h3>${x.icon} ${t(x.key)}</h3><p>${t(x.desc)}</p></div></a>`).join('');
+  renderDonate();renderFooter();
+}
+renderPage();
+</script></body></html>

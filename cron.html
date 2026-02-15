@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cron Expression Generator & Explainer — DevToolBox</title>
+<meta name="description" content="Free online cron expression generator and explainer. Build cron schedules visually and see next run times.">
+<meta name="keywords" content="cron expression generator, crontab guru, cron builder, cron explainer, cron schedule">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/cron.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<label id="lbl-expr"></label>
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+  <input type="text" id="cronInput" value="*/5 * * * *" style="font-size:1.3em;text-align:center;letter-spacing:4px">
+  <button class="btn" onclick="explainCron()" id="btn-explain"></button>
+  <button class="btn btn-copy" onclick="copyText($('#cronInput').value)">Copy</button>
+</div>
+<div class="split">
+  <div class="card">
+    <h2 id="lbl-explain-title">Explanation</h2>
+    <div id="explanation" class="output" style="min-height:100px"></div>
+  </div>
+  <div class="card">
+    <h2 id="lbl-next"></h2>
+    <div id="nextRuns" class="output" style="min-height:100px"></div>
+  </div>
+</div>
+<h2 style="margin-top:20px">Quick Presets</h2>
+<div class="toolbar" style="flex-wrap:wrap">
+  <button class="btn btn-secondary" onclick="setCron('* * * * *')">Every minute</button>
+  <button class="btn btn-secondary" onclick="setCron('*/5 * * * *')">Every 5 min</button>
+  <button class="btn btn-secondary" onclick="setCron('0 * * * *')">Every hour</button>
+  <button class="btn btn-secondary" onclick="setCron('0 0 * * *')">Daily midnight</button>
+  <button class="btn btn-secondary" onclick="setCron('0 9 * * 1')">Mon 9AM</button>
+  <button class="btn btn-secondary" onclick="setCron('0 0 1 * *')">Monthly</button>
+  <button class="btn btn-secondary" onclick="setCron('0 0 * * 0')">Weekly Sun</button>
+</div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function setCron(v){$('#cronInput').value=v;explainCron()}
+
+function explainCron(){
+  const v=$('#cronInput').value.trim();const parts=v.split(/\s+/);
+  if(parts.length<5||parts.length>6){$('#explanation').textContent='Invalid: need 5 fields (min hour dom month dow)';$('#nextRuns').textContent='';return}
+  const[min,hour,dom,mon,dow]=parts;
+  let desc=[];
+  desc.push(descField(min,'minute','0-59'));
+  desc.push(descField(hour,'hour','0-23'));
+  desc.push(descField(dom,'day of month','1-31'));
+  desc.push(descField(mon,'month','1-12'));
+  desc.push(descField(dow,'day of week','0-6, Sun=0'));
+  $('#explanation').innerHTML=desc.join('\n');
+  // Compute next 5 runs
+  const runs=getNextRuns(parts,5);
+  $('#nextRuns').textContent=runs.map((d,i)=>`${i+1}. ${d.toLocaleString()}`).join('\n');
+}
+function descField(v,name,range){
+  if(v==='*')return`${name}: every ${name} (${range})`;
+  if(v.startsWith('*/'))return`${name}: every ${v.slice(2)} ${name}s`;
+  if(v.includes(','))return`${name}: at ${v}`;
+  if(v.includes('-'))return`${name}: from ${v}`;
+  return`${name}: at ${v}`;
+}
+function getNextRuns(parts,count){
+  const[minP,hourP,domP,monP,dowP]=parts;
+  const runs=[];let d=new Date();d.setSeconds(0);d.setMilliseconds(0);d=new Date(d.getTime()+60000);
+  for(let i=0;i<525600&&runs.length<count;i++){
+    if(matchField(minP,d.getMinutes())&&matchField(hourP,d.getHours())&&matchField(domP,d.getDate())&&matchField(monP,d.getMonth()+1)&&matchField(dowP,d.getDay())){
+      runs.push(new Date(d));
+    }
+    d=new Date(d.getTime()+60000);
+  }
+  return runs;
+}
+function matchField(pattern,value){
+  if(pattern==='*')return true;
+  return pattern.split(',').some(p=>{
+    if(p.startsWith('*/'))return value%parseInt(p.slice(2))===0;
+    if(p.includes('-')){const[a,b]=p.split('-').map(Number);return value>=a&&value<=b}
+    return parseInt(p)===value;
+  });
+}
+function renderPage(){
+  renderNav('cron');$('#title').textContent=t('cronTitle');
+  $('#lbl-expr').textContent=t('cronExpr');$('#btn-explain').textContent=t('explain');
+  $('#lbl-next').textContent=t('nextRuns');
+  renderDonate();renderFooter();explainCron();
+}
+$('#cronInput').addEventListener('input',explainCron);
+renderPage();
+</script></body></html>

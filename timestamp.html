@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unix Timestamp Converter Online — DevToolBox</title>
+<meta name="description" content="Free online Unix timestamp converter. Convert between Unix timestamps and human-readable dates instantly.">
+<meta name="keywords" content="unix timestamp converter, timestamp to date, epoch converter, date to timestamp">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/timestamp.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div class="card" style="margin-bottom:16px">
+  <h2 id="lbl-current"></h2>
+  <div style="font-size:2em;color:var(--accent)" id="liveTs"></div>
+  <div id="liveDate" style="color:var(--text2);margin-top:4px"></div>
+</div>
+<div class="split">
+  <div class="card">
+    <h2 id="lbl-ts2d"></h2>
+    <input type="text" id="tsInput" placeholder="e.g. 1700000000">
+    <div class="toolbar"><button class="btn" onclick="ts2date()">${t('convert')}</button><button class="btn btn-copy" onclick="copyText($('#tsResult').textContent)">${t('copy')}</button></div>
+    <div class="output" id="tsResult" style="min-height:auto;padding:12px"></div>
+  </div>
+  <div class="card">
+    <h2 id="lbl-d2ts"></h2>
+    <input type="text" id="dateInput">
+    <div class="toolbar"><button class="btn" onclick="date2ts()">${t('convert')}</button><button class="btn btn-copy" onclick="copyText($('#dateResult').textContent)">${t('copy')}</button></div>
+    <div class="output" id="dateResult" style="min-height:auto;padding:12px"></div>
+  </div>
+</div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function updateLive(){const n=Math.floor(Date.now()/1000);$('#liveTs').textContent=n;$('#liveDate').textContent=new Date().toISOString()+' | '+new Date().toLocaleString()}
+setInterval(updateLive,1000);
+function ts2date(){
+  const v=$('#tsInput').value.trim();if(!v)return;
+  const s=v.length>10?+v:v*1000;const d=new Date(s);
+  $('#tsResult').textContent=`ISO: ${d.toISOString()}\nUTC: ${d.toUTCString()}\nLocal: ${d.toLocaleString()}\nRelative: ${timeAgo(d)}`;
+}
+function date2ts(){
+  const d=new Date($('#dateInput').value);
+  if(isNaN(d)){$('#dateResult').textContent='Invalid date';return}
+  const s=Math.floor(d.getTime()/1000);
+  $('#dateResult').textContent=`Seconds: ${s}\nMilliseconds: ${d.getTime()}`;
+}
+function timeAgo(d){const s=Math.floor((Date.now()-d)/1000);if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago'}
+function renderPage(){
+  renderNav('timestamp');$('#title').textContent=t('tsTitle');
+  $('#lbl-current').textContent=t('currentTs');$('#lbl-ts2d').textContent=t('tsToDate');$('#lbl-d2ts').textContent=t('dateToTs');
+  $('#dateInput').value=new Date().toISOString().slice(0,19);
+  updateLive();renderDonate();renderFooter();
+}
+$('#tsInput').addEventListener('input',ts2date);$('#dateInput').addEventListener('input',date2ts);
+renderPage();
+</script></body></html>

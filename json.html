@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON Formatter & Validator Online — DevToolBox</title>
+<meta name="description" content="Free online JSON formatter, validator, minifier. Format, beautify, validate and minify JSON data instantly.">
+<meta name="keywords" content="json formatter online, json validator, json beautifier, json minify, json to yaml, format json">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/json.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div class="toolbar" id="toolbar"></div>
+<div class="split">
+  <div><label id="lbl-in"></label><textarea id="input" spellcheck="false"></textarea></div>
+  <div><label id="lbl-out"></label><div class="output" id="output"></div></div>
+</div>
+<div id="status" style="margin-top:8px;font-size:.85em"></div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+let indent=2;
+function doFormat(){
+  try{const o=JSON.parse($('#input').value);$('#output').textContent=JSON.stringify(o,null,indent);$('#status').innerHTML=`<span style="color:var(--success)">${t('jsonValid')}</span>`}
+  catch(e){$('#status').innerHTML=`<span style="color:var(--accent)">${t('jsonInvalid')}: ${e.message}</span>`}
+}
+function doMinify(){
+  try{$('#output').textContent=JSON.stringify(JSON.parse($('#input').value));$('#status').innerHTML=`<span style="color:var(--success)">${t('jsonValid')}</span>`}
+  catch(e){$('#status').innerHTML=`<span style="color:var(--accent)">${t('jsonInvalid')}: ${e.message}</span>`}
+}
+function renderPage(){
+  renderNav('json');$('#title').textContent=t('jsonTitle');
+  $('#lbl-in').textContent=t('input');$('#lbl-out').textContent=t('output');
+  $('#input').placeholder=t('jsonInput');
+  $('#toolbar').innerHTML=`
+    <button class="btn" onclick="doFormat()">${t('format')}</button>
+    <button class="btn btn-secondary" onclick="doMinify()">${t('minify')}</button>
+    <button class="btn btn-copy" onclick="copyText($('#output').textContent)">${t('copy')}</button>
+    <button class="btn btn-secondary" onclick="$('#input').value='';$('#output').textContent='';$('#status').textContent=''">${t('clear')}</button>
+    <select onchange="indent=+this.value;doFormat()" style="width:auto;padding:8px"><option value="2">2 ${t('indent')}</option><option value="4">4 ${t('indent')}</option><option value="1">1 tab</option></select>`;
+  renderDonate();renderFooter();
+}
+$('#input').addEventListener('input',doFormat);
+renderPage();
+</script></body></html>

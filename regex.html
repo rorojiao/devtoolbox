@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Regex Tester Online — DevToolBox</title>
+<meta name="description" content="Free online regex tester with real-time matching and highlighting. Test regular expressions instantly.">
+<meta name="keywords" content="regex tester, regex online, regular expression tester, regex match, regex test online">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/regex.html">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1 id="title"></h1>
+<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+  <label id="lbl-pat" style="margin:0"></label>
+  <input type="text" id="pattern" style="flex:1;min-width:200px">
+  <label id="lbl-flags" style="margin:0"></label>
+  <input type="text" id="flags" value="g" style="width:60px">
+</div>
+<label id="lbl-test"></label>
+<textarea id="testStr" spellcheck="false"></textarea>
+<h2 id="lbl-matches"></h2>
+<div class="output" id="output"></div>
+<div id="matchInfo" style="margin-top:8px;font-size:.85em;color:var(--text2)"></div>
+<div class="donate" id="donate"></div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function doRegex(){
+  const p=$('#pattern').value,f=$('#flags').value,s=$('#testStr').value;
+  if(!p||!s){$('#output').innerHTML='';$('#matchInfo').textContent='';return}
+  try{
+    const re=new RegExp(p,f);let m,matches=[],last=0,html='';
+    if(f.includes('g')){
+      while((m=re.exec(s))!==null){
+        if(m.index===re.lastIndex)re.lastIndex++;
+        html+=escHtml(s.slice(last,m.index))+'<span class="highlight">'+escHtml(m[0])+'</span>';
+        matches.push({match:m[0],index:m.index,groups:m.slice(1)});last=m.index+m[0].length;
+      }
+      html+=escHtml(s.slice(last));
+    }else{
+      m=re.exec(s);
+      if(m){html=escHtml(s.slice(0,m.index))+'<span class="highlight">'+escHtml(m[0])+'</span>'+escHtml(s.slice(m.index+m[0].length));matches.push({match:m[0],index:m.index,groups:m.slice(1)})}
+      else html=escHtml(s);
+    }
+    $('#output').innerHTML=html||escHtml(s);
+    $('#matchInfo').textContent=matches.length?`${matches.length} match(es): ${matches.map((x,i)=>`[${i}] "${x.match}" @${x.index}`).join(', ')}`:t('noMatch');
+  }catch(e){$('#output').textContent=e.message;$('#matchInfo').textContent=''}
+}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function renderPage(){
+  renderNav('regex');$('#title').textContent=t('regexTitle');
+  $('#lbl-pat').textContent=t('pattern');$('#lbl-flags').textContent=t('flags');
+  $('#lbl-test').textContent=t('testStr');$('#lbl-matches').textContent=t('matches');
+  $('#pattern').placeholder=t('regexPlaceholder');$('#testStr').placeholder=t('testPlaceholder');
+  renderDonate();renderFooter();
+}
+$('#pattern').addEventListener('input',doRegex);$('#flags').addEventListener('input',doRegex);$('#testStr').addEventListener('input',doRegex);
+renderPage();
+</script></body></html>
