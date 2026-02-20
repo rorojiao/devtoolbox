@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS Gradient Generator — DevToolBox</title>
+<meta name="description" content="Free online CSS gradient generator. Create beautiful linear and radial gradients with real-time preview and copy CSS code.">
+<meta name="keywords" content="css gradient generator, linear gradient, radial gradient, css gradient tool, gradient maker online">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/css-gradient.html">
+<link rel="stylesheet" href="style.css">
+<style>
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:.85em;color:var(--text2);line-height:1.6}
+.info-box summary{color:var(--accent);cursor:pointer;font-weight:700}
+.tool-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.tool-links a{padding:6px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:.8em;color:var(--text2);transition:.2s}
+.tool-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.preview{width:100%;height:200px;border-radius:var(--radius);border:1px solid var(--border);margin:16px 0;transition:all .5s}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){.controls{grid-template-columns:1fr}}
+.control-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.control-group label{font-size:.85em;color:var(--text2);display:block;margin-bottom:6px}
+.color-stops{display:flex;flex-direction:column;gap:8px}
+.stop-row{display:flex;align-items:center;gap:8px}
+.stop-row input[type=color]{width:50px;height:36px;border:none;border-radius:4px;cursor:pointer;background:none}
+.stop-row input[type=range]{flex:1}
+.stop-row .pos-val{min-width:36px;text-align:right;font-size:.85em;color:var(--text2)}
+.code-output{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-size:.85em;word-break:break-all;margin:16px 0;transition:all .3s}
+input[type=range]{accent-color:var(--accent);width:100%}
+select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:var(--radius);font-family:var(--mono);font-size:.85em;width:100%}
+</style>
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1>CSS Gradient Generator</h1>
+<details class="info-box"><summary>📖 How to use</summary>
+<p style="margin-top:8px">Choose gradient type, adjust colors and positions, and see the result in real-time. Click <b>Add Stop</b> for more colors. Copy the generated CSS code with one click.</p>
+</details>
+<div class="preview" id="preview"></div>
+<div class="controls">
+  <div class="control-group">
+    <label>Gradient Type</label>
+    <select id="type" onchange="update()"><option value="linear">Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select>
+    <label style="margin-top:12px">Angle (linear/conic)</label>
+    <input type="range" id="angle" min="0" max="360" value="90" oninput="update()">
+    <span id="angleVal" style="font-size:.85em;color:var(--text2)">90°</span>
+  </div>
+  <div class="control-group">
+    <label>Color Stops</label>
+    <div class="color-stops" id="stops"></div>
+    <button class="btn btn-secondary" style="margin-top:8px;width:100%" onclick="addStop()">+ Add Stop</button>
+  </div>
+</div>
+<div class="code-output" id="code"></div>
+<div class="toolbar">
+  <button class="btn btn-copy" onclick="copyText($('#code').textContent)">Copy CSS</button>
+  <button class="btn btn-secondary" onclick="randomGradient()">🎲 Random</button>
+</div>
+<div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
+<div class="tool-links">
+  <a href="json-formatter.html">JSON</a><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a>
+  <a href="hash-generator.html">Hash</a><a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-shadow.html">CSS Shadow</a>
+</div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+let stops=[{color:'#e94560',pos:0},{color:'#0f3460',pos:100}];
+function renderStops(){
+  $('#stops').innerHTML=stops.map((s,i)=>`<div class="stop-row">
+    <input type="color" value="${s.color}" onchange="stops[${i}].color=this.value;update()">
+    <input type="range" min="0" max="100" value="${s.pos}" oninput="stops[${i}].pos=+this.value;this.nextElementSibling.textContent=this.value+'%';update()">
+    <span class="pos-val">${s.pos}%</span>
+    ${stops.length>2?`<button class="btn btn-secondary" style="padding:4px 8px;font-size:.8em" onclick="stops.splice(${i},1);renderStops();update()">✕</button>`:''}
+  </div>`).join('');
+}
+function addStop(){
+  const c='#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+  stops.push({color:c,pos:50});renderStops();update();
+}
+function update(){
+  const type=$('#type').value;const angle=$('#angle').value;
+  $('#angleVal').textContent=angle+'°';
+  const stopsStr=stops.map(s=>`${s.color} ${s.pos}%`).join(', ');
+  let css;
+  if(type==='linear')css=`linear-gradient(${angle}deg, ${stopsStr})`;
+  else if(type==='radial')css=`radial-gradient(circle, ${stopsStr})`;
+  else css=`conic-gradient(from ${angle}deg, ${stopsStr})`;
+  $('#preview').style.background=css;
+  $('#code').textContent=`background: ${css};`;
+}
+function randomGradient(){
+  const rc=()=>'#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+  stops=[{color:rc(),pos:0},{color:rc(),pos:100}];
+  if(Math.random()>.5)stops.splice(1,0,{color:rc(),pos:50});
+  $('#angle').value=Math.floor(Math.random()*360);
+  renderStops();update();
+}
+renderStops();update();
+function renderPage(){renderNav('');renderFooter()}
+renderPage();
+</script>
+<script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
+</body></html>

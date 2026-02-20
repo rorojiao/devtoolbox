@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON Formatter & Beautifier — DevToolBox</title>
+<meta name="description" content="Free online JSON formatter, beautifier, minifier with syntax highlighting and error location. Format, compress and validate JSON instantly.">
+<meta name="keywords" content="json formatter, json beautifier, json minifier, json syntax highlight, json validator, format json online">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/json-formatter.html">
+<link rel="stylesheet" href="style.css">
+<style>
+.json-key{color:#e94560}.json-string{color:#00d672}.json-number{color:#61afef}.json-bool{color:#d19a66}.json-null{color:#888}
+.error-line{background:#e9456033;display:block;padding:0 4px;border-left:3px solid var(--accent)}
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:.85em;color:var(--text2);line-height:1.6}
+.info-box summary{color:var(--accent);cursor:pointer;font-weight:700}
+.tool-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.tool-links a{padding:6px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:.8em;color:var(--text2);transition:.2s}
+.tool-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+#output{transition:opacity .3s}
+.indent-select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:var(--radius);font-family:var(--mono);font-size:.85em}
+</style>
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1>JSON Formatter & Beautifier</h1>
+<details class="info-box"><summary>📖 How to use</summary>
+<p style="margin-top:8px">Paste your JSON into the input area. Click <b>Format</b> to beautify with syntax highlighting, <b>Minify</b> to compress, or <b>Validate</b> to check validity. Errors show the exact line and position.</p>
+</details>
+<div class="toolbar">
+  <button class="btn" onclick="doFormat()">Format</button>
+  <button class="btn btn-secondary" onclick="doMinify()">Minify</button>
+  <button class="btn btn-secondary" onclick="doValidate()">Validate</button>
+  <select class="indent-select" id="indent" onchange="doFormat()">
+    <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="\t">Tab</option>
+  </select>
+  <button class="btn btn-copy" onclick="copyOutput()">Copy</button>
+  <button class="btn btn-secondary" onclick="doClear()">Clear</button>
+</div>
+<div class="split">
+  <div><label>Input</label><textarea id="input" spellcheck="false" placeholder="Paste JSON here..."></textarea></div>
+  <div><label>Output</label><div class="output" id="output" style="min-height:200px"></div></div>
+</div>
+<div id="status" style="margin-top:8px;font-size:.85em"></div>
+<div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
+<div class="tool-links">
+  <a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a><a href="hash-generator.html">Hash</a>
+  <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-gradient.html">CSS Gradient</a><a href="css-shadow.html">CSS Shadow</a>
+</div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function syntaxHighlight(json){
+  return json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d+)?([eE][+-]?\d+)?)/g,m=>{
+      let c='json-number';if(/^"/.test(m)){c=/:$/.test(m)?'json-key':'json-string'}
+      else if(/true|false/.test(m))c='json-bool';else if(/null/.test(m))c='json-null';
+      return`<span class="${c}">${m}</span>`;
+    });
+}
+function getIndent(){const v=$('#indent').value;return v==='\t'?'\t':parseInt(v)}
+function doFormat(){
+  const inp=$('#input').value.trim();if(!inp)return;
+  try{
+    const obj=JSON.parse(inp);const formatted=JSON.stringify(obj,null,getIndent());
+    $('#output').style.opacity='0';
+    setTimeout(()=>{$('#output').innerHTML=syntaxHighlight(formatted);$('#output').style.opacity='1'},150);
+    $('#status').innerHTML='<span style="color:var(--success)">✓ Valid JSON</span>';
+  }catch(e){showError(e)}
+}
+function doMinify(){
+  const inp=$('#input').value.trim();if(!inp)return;
+  try{$('#output').textContent=JSON.stringify(JSON.parse(inp));$('#status').innerHTML='<span style="color:var(--success)">✓ Minified</span>'}
+  catch(e){showError(e)}
+}
+function doValidate(){
+  const inp=$('#input').value.trim();if(!inp)return;
+  try{JSON.parse(inp);$('#status').innerHTML='<span style="color:var(--success)">✓ Valid JSON</span>';$('#output').textContent='Valid!'}
+  catch(e){showError(e)}
+}
+function showError(e){
+  const msg=e.message;const posMatch=msg.match(/position (\d+)/);
+  let info=`<span style="color:var(--accent)">✗ ${msg}</span>`;
+  if(posMatch){
+    const pos=parseInt(posMatch[1]);const before=$('#input').value.substring(0,pos);
+    const line=before.split('\n').length;const col=pos-before.lastIndexOf('\n');
+    info+=` <span style="color:var(--text2)">(Line ${line}, Col ${col})</span>`;
+  }
+  $('#status').innerHTML=info;$('#output').innerHTML=`<span style="color:var(--accent)">${msg}</span>`;
+}
+function copyOutput(){const t=$('#output').textContent;if(t)copyText(t)}
+function doClear(){$('#input').value='';$('#output').textContent='';$('#status').innerHTML=''}
+$('#input').addEventListener('input',()=>{if($('#input').value.trim())doFormat()});
+function renderPage(){renderNav('');renderFooter()}
+renderPage();
+</script>
+<script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
+</body></html>

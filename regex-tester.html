@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Regex Tester — Real-time Regex Pattern Matcher — DevToolBox</title>
+<meta name="description" content="Free online regex tester with real-time highlighting. Test regular expressions against text with match details, groups, and flags support.">
+<meta name="keywords" content="regex tester, regex online, regular expression tester, regex match, regex highlight, regex groups">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/regex-tester.html">
+<link rel="stylesheet" href="style.css">
+<style>
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:.85em;color:var(--text2);line-height:1.6}
+.info-box summary{color:var(--accent);cursor:pointer;font-weight:700}
+.tool-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.tool-links a{padding:6px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:.8em;color:var(--text2);transition:.2s}
+.tool-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.pattern-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.pattern-row input{flex:1;min-width:200px}
+.flags-row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.flags-row label{display:flex;align-items:center;gap:4px;font-size:.85em;color:var(--text2);cursor:pointer}
+.flags-row input[type=checkbox]{accent-color:var(--accent)}
+.highlight-area{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;min-height:150px;white-space:pre-wrap;word-break:break-all;font-size:.9em;line-height:1.6}
+.match-hl{background:var(--accent);color:#fff;padding:1px 2px;border-radius:2px}
+.match-info{margin-top:12px}
+.match-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;margin:4px 0;font-size:.85em;transition:all .3s}
+.match-item:hover{border-color:var(--accent)}
+.match-idx{color:var(--accent);font-weight:700;margin-right:8px}
+.group-label{color:var(--text2);font-size:.8em}
+</style>
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1>Regex Tester</h1>
+<details class="info-box"><summary>📖 How to use</summary>
+<p style="margin-top:8px">Enter a regex pattern and test string. Matches are highlighted in real-time. Toggle flags (g, i, m, s) to change behavior. Groups are shown in the match details below.</p>
+</details>
+<div class="pattern-row">
+  <span style="color:var(--accent);font-size:1.2em">/</span>
+  <input type="text" id="pattern" placeholder="Enter regex pattern..." style="font-size:1em">
+  <span style="color:var(--accent);font-size:1.2em">/</span>
+  <span id="flagsDisplay" style="color:var(--accent)">g</span>
+</div>
+<div class="flags-row">
+  <label><input type="checkbox" id="flag-g" checked onchange="doTest()">g (global)</label>
+  <label><input type="checkbox" id="flag-i" onchange="doTest()">i (case-insensitive)</label>
+  <label><input type="checkbox" id="flag-m" onchange="doTest()">m (multiline)</label>
+  <label><input type="checkbox" id="flag-s" onchange="doTest()">s (dotAll)</label>
+</div>
+<label>Test String</label>
+<textarea id="input" spellcheck="false" placeholder="Enter test string..." style="margin-bottom:12px"></textarea>
+<label>Highlighted Result</label>
+<div class="highlight-area" id="highlighted"></div>
+<div class="match-info" id="matches"></div>
+<div class="toolbar" style="margin-top:12px">
+  <button class="btn btn-secondary" onclick="$('#pattern').value='';$('#input').value='';$('#highlighted').innerHTML='';$('#matches').innerHTML=''">Clear</button>
+</div>
+<div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
+<div class="tool-links">
+  <a href="json-formatter.html">JSON</a><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a>
+  <a href="hash-generator.html">Hash</a><a href="jwt-decoder.html">JWT</a><a href="css-gradient.html">CSS Gradient</a><a href="css-shadow.html">CSS Shadow</a>
+</div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function getFlags(){
+  let f='';
+  if($('#flag-g').checked)f+='g';if($('#flag-i').checked)f+='i';
+  if($('#flag-m').checked)f+='m';if($('#flag-s').checked)f+='s';
+  $('#flagsDisplay').textContent=f||'(none)';return f;
+}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function doTest(){
+  const pat=$('#pattern').value;const text=$('#input').value;const flags=getFlags();
+  if(!pat||!text){$('#highlighted').innerHTML=escHtml(text);$('#matches').innerHTML='';return}
+  try{
+    const re=new RegExp(pat,flags);
+    const allMatches=[];let m;const re2=new RegExp(pat,flags.includes('g')?flags:flags+'g');
+    while((m=re2.exec(text))!==null){allMatches.push({match:m[0],index:m.index,groups:m.slice(1)});if(!m[0].length)re2.lastIndex++}
+    // Highlight
+    let html='',last=0;
+    for(const mt of allMatches){
+      html+=escHtml(text.substring(last,mt.index));
+      html+=`<span class="match-hl">${escHtml(mt.match)}</span>`;
+      last=mt.index+mt.match.length;
+    }
+    html+=escHtml(text.substring(last));
+    $('#highlighted').innerHTML=html;
+    // Match details
+    if(allMatches.length===0){$('#matches').innerHTML='<p style="color:var(--text2);margin-top:8px">No matches</p>';return}
+    let mhtml=`<p style="margin:8px 0;color:var(--success)">${allMatches.length} match${allMatches.length>1?'es':''} found</p>`;
+    allMatches.forEach((mt,i)=>{
+      mhtml+=`<div class="match-item"><span class="match-idx">#${i+1}</span>"${escHtml(mt.match)}" <span class="group-label">at index ${mt.index}</span>`;
+      if(mt.groups.length)mt.groups.forEach((g,gi)=>{mhtml+=`<br><span class="group-label">  Group ${gi+1}: "${escHtml(g||'')}"</span>`});
+      mhtml+=`</div>`;
+    });
+    $('#matches').innerHTML=mhtml;
+  }catch(e){$('#highlighted').innerHTML=`<span style="color:var(--accent)">Invalid regex: ${escHtml(e.message)}</span>`;$('#matches').innerHTML=''}
+}
+$('#pattern').addEventListener('input',doTest);
+$('#input').addEventListener('input',doTest);
+function renderPage(){renderNav('');renderFooter()}
+renderPage();
+</script>
+<script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
+</body></html>

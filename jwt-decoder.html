@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JWT Token Decoder — DevToolBox</title>
+<meta name="description" content="Free online JWT decoder. Decode and inspect JWT tokens — view header, payload, and signature without verification.">
+<meta name="keywords" content="jwt decoder, jwt token decode, jwt parser, json web token, jwt header payload">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/jwt-decoder.html">
+<link rel="stylesheet" href="style.css">
+<style>
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:.85em;color:var(--text2);line-height:1.6}
+.info-box summary{color:var(--accent);cursor:pointer;font-weight:700}
+.tool-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.tool-links a{padding:6px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:.8em;color:var(--text2);transition:.2s}
+.tool-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.jwt-section{margin:12px 0;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:all .3s}
+.jwt-section h2{margin-bottom:8px;font-size:1em}
+.jwt-section pre{white-space:pre-wrap;word-break:break-all;font-size:.85em;line-height:1.5}
+.jwt-key{color:#e94560}.jwt-string{color:#00d672}.jwt-number{color:#61afef}.jwt-bool{color:#d19a66}.jwt-null{color:#888}
+.exp-info{margin-top:8px;padding:8px 12px;border-radius:var(--radius);font-size:.85em}
+.exp-valid{background:#00d67222;color:#00d672}.exp-expired{background:#e9456033;color:#e94560}
+</style>
+</head><body>
+<header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
+<div class="container">
+<h1>JWT Token Decoder</h1>
+<details class="info-box"><summary>📖 How to use</summary>
+<p style="margin-top:8px">Paste a JWT token below. The header and payload will be decoded and displayed with syntax highlighting. Expiration time (exp) is automatically checked. No secret key required — this only decodes, not verifies.</p>
+</details>
+<label>JWT Token</label>
+<textarea id="input" spellcheck="false" placeholder="Paste JWT token here (eyJhbGciOiJIUzI1NiIs...)" style="min-height:100px;margin-bottom:16px"></textarea>
+<div class="toolbar">
+  <button class="btn" onclick="doDecode()">Decode</button>
+  <button class="btn btn-secondary" onclick="$('#input').value='';$('#results').innerHTML=''">Clear</button>
+</div>
+<div id="results"></div>
+<div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
+<div class="tool-links">
+  <a href="json-formatter.html">JSON</a><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a>
+  <a href="hash-generator.html">Hash</a><a href="regex-tester.html">Regex</a><a href="css-gradient.html">CSS Gradient</a><a href="css-shadow.html">CSS Shadow</a>
+</div>
+</div>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="i18n.js"></script><script src="common.js"></script>
+<script>
+function syntaxHL(json){
+  return json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d+)?([eE][+-]?\d+)?)/g,m=>{
+      let c='jwt-number';if(/^"/.test(m))c=/:$/.test(m)?'jwt-key':'jwt-string';
+      else if(/true|false/.test(m))c='jwt-bool';else if(/null/.test(m))c='jwt-null';
+      return`<span class="${c}">${m}</span>`;
+    });
+}
+function b64decode(str){
+  str=str.replace(/-/g,'+').replace(/_/g,'/');
+  while(str.length%4)str+='=';
+  return decodeURIComponent(atob(str).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+function doDecode(){
+  const token=$('#input').value.trim();if(!token){$('#results').innerHTML='';return}
+  const parts=token.split('.');
+  if(parts.length<2){$('#results').innerHTML='<p style="color:var(--accent)">Invalid JWT format (expected 3 parts separated by dots)</p>';return}
+  try{
+    const header=JSON.parse(b64decode(parts[0]));
+    const payload=JSON.parse(b64decode(parts[1]));
+    let expHtml='';
+    if(payload.exp){
+      const expDate=new Date(payload.exp*1000);const now=new Date();
+      const isExpired=expDate<now;
+      expHtml=`<div class="exp-info ${isExpired?'exp-expired':'exp-valid'}">${isExpired?'⚠️ Expired':'✓ Valid'}: ${expDate.toLocaleString()} (${isExpired?'expired ':'expires in '}${Math.abs(Math.round((expDate-now)/60000))} min)</div>`;
+    }
+    if(payload.iat){const d=new Date(payload.iat*1000);payload._iat_readable=d.toLocaleString()}
+    if(payload.nbf){const d=new Date(payload.nbf*1000);payload._nbf_readable=d.toLocaleString()}
+
+    let html=`<div class="jwt-section"><h2 style="color:var(--accent)">📋 Header</h2><pre>${syntaxHL(JSON.stringify(header,null,2))}</pre><button class="btn btn-copy" style="margin-top:8px" onclick="copyText(JSON.stringify(${JSON.stringify(header)},null,2))">Copy Header</button></div>`;
+    html+=`<div class="jwt-section"><h2 style="color:var(--accent)">📦 Payload</h2><pre>${syntaxHL(JSON.stringify(payload,null,2))}</pre>${expHtml}<button class="btn btn-copy" style="margin-top:8px" onclick="copyText(JSON.stringify(${JSON.stringify(payload)},null,2))">Copy Payload</button></div>`;
+    html+=`<div class="jwt-section"><h2 style="color:var(--accent)">🔐 Signature</h2><pre style="color:var(--text2)">${parts[2]||'(none)'}</pre></div>`;
+    $('#results').innerHTML=html;
+  }catch(e){$('#results').innerHTML=`<p style="color:var(--accent)">Decode error: ${e.message}</p>`}
+}
+$('#input').addEventListener('input',doDecode);
+function renderPage(){renderNav('');renderFooter()}
+renderPage();
+</script>
+<script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
+</body></html>
