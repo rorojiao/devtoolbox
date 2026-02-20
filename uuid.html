@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UUID生成器 | DevToolbox</title>
+<meta name="description" content="批量生成UUID v4。">
+<meta name="keywords" content="UUID生成器,GUID">
+<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/uuid.html">
+<link rel="stylesheet" href="style.css">
+<meta property="og:title" content="UUID生成器 | DevToolbox">
+<meta property="og:description" content="批量生成UUID v4。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/uuid.html">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"UUID生成器","url":"https://rorojiao.github.io/devtoolbox/uuid.html","description":"批量生成UUID v4。"}</script>
+</head>
+<body>
+<header class="header"><div class="header-inner">
+<a href="index.html" class="logo">🛠️ DevToolbox 开发工具箱</a>
+<button class="nav-toggle" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
+<nav class="nav"><a href="index.html">首页</a><a href="json.html">JSON</a><a href="base64.html">Base64</a><a href="hash.html">Hash</a><a href="regex.html">正则</a><a href="url-encode.html">URL编码</a><a href="color.html">颜色</a><a href="jwt.html">JWT</a><a href="uuid.html" class=active>UUID</a><a href="sql.html">SQL</a></nav>
+</div></header>
+<div class="container">
+<h1>UUID生成器</h1><p class="subtitle">UUID v4</p><div class="card"><div class="form-group"><label>数量</label><input type="number" id="c" value="5" min="1" max="100"></div><div style="display:flex;gap:10px"><button class="btn" onclick="gen()">生成</button><button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('o').value)" style="background:#6b7280">📋复制</button></div><textarea id="o" rows="8" style="width:100%;margin-top:15px;padding:10px;border-radius:8px;border:1px solid #ddd;font-family:monospace" readonly></textarea></div><div class="card" style="margin-top:20px"><h2>UUID说明</h2><p>128位全局唯一标识符，v4基于随机数。格式：8-4-4-4-12。</p></div><script>function gen(){const n=+document.getElementById("c").value,r=[];for(let i=0;i<n;i++)r.push("xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const v=Math.random()*16|0;return(c==="x"?v:v&3|8).toString(16)}));document.getElementById("o").value=r.join("\n")}gen()</script>
+</div>
+<div class="more-tools" style="max-width:800px;margin:40px auto;padding:20px;background:#f8f9fa;border-radius:12px;text-align:center">
+<h3 style="margin-bottom:12px">🔗 更多免费工具</h3>
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"><a href="https://rorojiao.github.io/calcsmart/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">⚡智算</a>
+<a href="https://rorojiao.github.io/healthcalc/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">💪健康</a>
+<a href="https://rorojiao.github.io/unitswitch/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">🔄换算</a>
+<a href="https://rorojiao.github.io/fortune-tools/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">🔮算命</a>
+<a href="https://rorojiao.github.io/datecalc/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">📅日期</a>
+<a href="https://rorojiao.github.io/namegenius/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">✨起名</a>
+<a href="https://rorojiao.github.io/cryptogauge/" style="padding:6px 14px;background:#fff;border-radius:20px;text-decoration:none;color:#333;border:1px solid #e0e0e0;font-size:14px">₿加密</a></div></div>
+<div class="donate"><p>☕ 觉得好用？打赏一杯咖啡</p><p>ETH/USDT: <code>0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823</code></p></div>
+<div style="text-align:center;margin:20px auto;max-width:728px;"><iframe data-aa="2427662" src="//acceptable.a-ads.com/2427662/?size=Adaptive" style="border:0;padding:0;width:100%;height:auto;min-height:60px;overflow:hidden;display:block;margin:auto;"></iframe></div>
+<footer class="footer">© 2026 DevToolbox 开发工具箱</footer>
+<script>fetch("https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(location.hostname)+"&p="+encodeURIComponent(location.pathname)).catch(()=>{})</script>
+</body>
+</html>
