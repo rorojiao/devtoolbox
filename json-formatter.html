@@ -1,10 +1,11 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JSON Formatter & Beautifier — DevToolBox</title>
-<meta name="description" content="Free online JSON formatter, beautifier, minifier with syntax highlighting and error location. Format, compress and validate JSON instantly.">
-<meta name="keywords" content="json formatter, json beautifier, json minifier, json syntax highlight, json validator, format json online">
-<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/json-formatter.html">
-<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>JSON Formatter &amp; Beautifier — DevToolBox</title>
+<meta content="Free online JSON formatter, beautifier, minifier with syntax highlighting and error location. Format, compress and validate JSON instantly." name="description"/>
+<meta content="json formatter, json beautifier, json minifier, json syntax highlight, json validator, format json online" name="keywords"/>
+<link href="https://rorojiao.github.io/devtoolbox/json-formatter.html" rel="canonical"/>
+<link href="style.css" rel="stylesheet"/>
 <style>
 .json-key{color:#e94560}.json-string{color:#00d672}.json-number{color:#61afef}.json-bool{color:#d19a66}.json-null{color:#888}
 .error-line{background:#e9456033;display:block;padding:0 4px;border-left:3px solid var(--accent)}
@@ -16,23 +17,22 @@
 #output{transition:opacity .3s}
 .indent-select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:var(--radius);font-family:var(--mono);font-size:.85em}
 </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353" crossorigin="anonymous"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-8346383990981353",
     enable_page_level_ads: true
   });
 </script>
-
-<meta property="og:title" content="JSON Formatter & Beautifier Online — DevToolBox">
-<meta property="og:description" content="Free online JSON formatter, beautifier, and minifier with syntax highlighting and error detection. Format and validate JSON instantly.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/json-formatter.html">
-<meta property="og:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JSON Formatter & Beautifier Online — DevToolBox">
-<meta name="twitter:description" content="Free online JSON formatter, beautifier, and minifier with syntax highlighting and error detection. Format and validate JSON instantly.">
-<meta name="twitter:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
+<meta content="JSON Formatter &amp; Beautifier Online — DevToolBox" property="og:title"/>
+<meta content="Free online JSON formatter, beautifier, and minifier with syntax highlighting and error detection. Format and validate JSON instantly." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://rorojiao.github.io/devtoolbox/json-formatter.html" property="og:url"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="JSON Formatter &amp; Beautifier Online — DevToolBox" name="twitter:title"/>
+<meta content="Free online JSON formatter, beautifier, and minifier with syntax highlighting and error detection. Format and validate JSON instantly." name="twitter:description"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" name="twitter:image"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -101,32 +101,32 @@
   ]
 }
 </script>
-</head><body>
+<meta content="DevToolbox" property="og:site_name"/></head><body>
 <header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
 <div class="container">
-<h1>JSON Formatter & Beautifier</h1>
+<h1>JSON Formatter &amp; Beautifier</h1>
 <details class="info-box"><summary>📖 How to use</summary>
 <p style="margin-top:8px">Paste your JSON into the input area. Click <b>Format</b> to beautify with syntax highlighting, <b>Minify</b> to compress, or <b>Validate</b> to check validity. Errors show the exact line and position.</p>
 </details>
 <div class="toolbar">
-  <button class="btn" onclick="doFormat()">Format</button>
-  <button class="btn btn-secondary" onclick="doMinify()">Minify</button>
-  <button class="btn btn-secondary" onclick="doValidate()">Validate</button>
-  <select class="indent-select" id="indent" onchange="doFormat()">
-    <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="\t">Tab</option>
-  </select>
-  <button class="btn btn-copy" onclick="copyOutput()">Copy</button>
-  <button class="btn btn-secondary" onclick="doClear()">Clear</button>
+<button class="btn" onclick="doFormat()">Format</button>
+<button class="btn btn-secondary" onclick="doMinify()">Minify</button>
+<button class="btn btn-secondary" onclick="doValidate()">Validate</button>
+<select class="indent-select" id="indent" onchange="doFormat()">
+<option value="2">2 spaces</option><option value="4">4 spaces</option><option value="\t">Tab</option>
+</select>
+<button class="btn btn-copy" onclick="copyOutput()">Copy</button>
+<button class="btn btn-secondary" onclick="doClear()">Clear</button>
 </div>
 <div class="split">
-  <div><label>Input</label><textarea id="input" spellcheck="false" placeholder="Paste JSON here..."></textarea></div>
-  <div><label>Output</label><div class="output" id="output" style="min-height:200px"></div></div>
+<div><label>Input</label><textarea id="input" placeholder="Paste JSON here..." spellcheck="false"></textarea></div>
+<div><label>Output</label><div class="output" id="output" style="min-height:200px"></div></div>
 </div>
 <div id="status" style="margin-top:8px;font-size:.85em"></div>
 <div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
 <div class="tool-links">
-  <a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a><a href="hash-generator.html">Hash</a>
-  <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-gradient.html">CSS Gradient</a><a href="css-shadow.html">CSS Shadow</a>
+<a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a><a href="hash-generator.html">Hash</a>
+<a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-gradient.html">CSS Gradient</a><a href="css-shadow.html">CSS Shadow</a>
 </div>
 </div>
 <footer id="footer"></footer>
@@ -178,31 +178,24 @@ function renderPage(){renderNav('');renderFooter()}
 renderPage();
 </script>
 <script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
-
 <!-- AdSense 响应式广告 -->
 <div style="text-align:center;margin:20px auto;max-width:970px;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-8346383990981353"
-       data-ad-slot="4014087267"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8346383990981353" data-ad-format="auto" data-ad-slot="4014087267" data-full-width-responsive="true" style="display:block"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
 <section class="faq-section" style="max-width:800px;margin:40px auto;padding:0 16px">
-  <h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
-  </details>
+<h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
+</details>
 </section>
 </body></html>

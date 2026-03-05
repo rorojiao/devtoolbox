@@ -1,29 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Markdown Editor & Preview Online — DevToolBox</title>
-<meta name="description" content="Write and preview Markdown online with live rendering. Supports GitHub Flavored Markdown. Free online Markdown editor.">
-<meta name="keywords" content="Markdown编辑器,Markdown预览">
-<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/markdown.html">
-<link rel="stylesheet" href="style.css">
-<meta property="og:title" content="Markdown预览 | DevToolbox">
-<meta property="og:description" content="在线Markdown编辑预览。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/markdown.html">
-<meta property="og:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
-<meta name="twitter:card" content="summary">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Markdown Editor &amp; Preview Online — DevToolBox</title>
+<meta content="Write and preview Markdown online with live rendering. Supports GitHub Flavored Markdown. Free online Markdown editor." name="description"/>
+<meta content="Markdown编辑器,Markdown预览" name="keywords"/>
+<link href="https://rorojiao.github.io/devtoolbox/markdown.html" rel="canonical"/>
+<link href="style.css" rel="stylesheet"/>
+<meta content="Markdown预览 | DevToolbox" property="og:title"/>
+<meta content="在线Markdown编辑预览。" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://rorojiao.github.io/devtoolbox/markdown.html" property="og:url"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" property="og:image"/>
+<meta content="summary" name="twitter:card"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Markdown预览","url":"https://rorojiao.github.io/devtoolbox/markdown.html","description":"在线Markdown编辑预览。"}</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353" crossorigin="anonymous"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-8346383990981353",
     enable_page_level_ads: true
   });
 </script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -76,15 +76,32 @@
   ]
 }
 </script>
-</head>
+<meta content="DevToolbox" property="og:site_name"/><meta content="Markdown Editor &amp; Preview Online — DevToolBox" name="twitter:title"/><meta content="Write and preview Markdown online with live rendering. Supports GitHub Flavored Markdown. Free online Markdown editor." name="twitter:description"/><meta content="https://devtoolbox.vercel.app/og-image.png" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Markdown Editor & Preview Online — DevToolBox",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web Browser",
+  "url": "https://rorojiao.github.io/markdown",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DevToolbox",
+    "url": "https://devtoolbox.vercel.app"
+  }
+}</script></head>
 <body>
 <header class="header"><div class="header-inner">
-<a href="index.html" class="logo">🛠️ DevToolbox 开发工具箱</a>
+<a class="logo" href="index.html">🛠️ DevToolbox 开发工具箱</a>
 <button class="nav-toggle" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
 <nav class="nav"><a href="index.html">首页</a><a href="json.html">JSON</a><a href="base64.html">Base64</a><a href="hash.html">Hash</a><a href="regex.html">正则</a><a href="url-encode.html">URL编码</a><a href="color.html">颜色</a><a href="jwt.html">JWT</a><a href="uuid.html">UUID</a><a href="sql.html">SQL</a></nav>
 </div></header>
 <div class="container">
-<h1>Markdown预览</h1><p class="subtitle">实时编辑预览</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px"><div class="card" style="height:400px;display:flex;flex-direction:column"><h3>✏️编辑</h3><textarea id="md" style="flex:1;width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-family:monospace;resize:none" oninput="render()">## Hello\n**粗体** `代码`\n- 列表1\n- 列表2\n> 引用</textarea></div><div class="card" style="height:400px;overflow-y:auto"><h3>👁️预览</h3><div id="out" style="line-height:1.8"></div></div></div><style>@media(max-width:768px){div[style*=grid-template-columns]{grid-template-columns:1fr!important}}</style><script>function render(){let t=document.getElementById("md").value;t=t.replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");t=t.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code style=background:#f1f5f9;padding:2px_6px;border-radius:4px>$1</code>");t=t.replace(/^> (.+)$/gm,"<blockquote style=border-left:4px_solid_#2563eb;padding-left:12px;color:#666>$1</blockquote>");t=t.replace(/^- (.+)$/gm,"<li>$1</li>").replace(/\n/g,"<br>");document.getElementById("out").innerHTML=t}render()</script>
+<h1>Markdown预览</h1><p class="subtitle">实时编辑预览</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px"><div class="card" style="height:400px;display:flex;flex-direction:column"><h3>✏️编辑</h3><textarea id="md" oninput="render()" style="flex:1;width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-family:monospace;resize:none">## Hello\n**粗体** `代码`\n- 列表1\n- 列表2\n&gt; 引用</textarea></div><div class="card" style="height:400px;overflow-y:auto"><h3>👁️预览</h3><div id="out" style="line-height:1.8"></div></div></div><style>@media(max-width:768px){div[style*=grid-template-columns]{grid-template-columns:1fr!important}}</style><script>function render(){let t=document.getElementById("md").value;t=t.replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");t=t.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code style=background:#f1f5f9;padding:2px_6px;border-radius:4px>$1</code>");t=t.replace(/^> (.+)$/gm,"<blockquote style=border-left:4px_solid_#2563eb;padding-left:12px;color:#666>$1</blockquote>");t=t.replace(/^- (.+)$/gm,"<li>$1</li>").replace(/\n/g,"<br>");document.getElementById("out").innerHTML=t}render()</script>
 </div>
 <div class="more-tools" style="max-width:800px;margin:40px auto;padding:20px;background:#f8f9fa;border-radius:12px;text-align:center">
 <h3 style="margin-bottom:12px">🔗 更多免费工具</h3>
@@ -99,32 +116,25 @@
 <div style="text-align:center;margin:20px auto;max-width:728px;"><iframe data-aa="2427662" src="//acceptable.a-ads.com/2427662/?size=Adaptive" style="border:0;padding:0;width:100%;height:auto;min-height:60px;overflow:hidden;display:block;margin:auto;"></iframe></div>
 <footer class="footer">© 2026 DevToolbox 开发工具箱</footer>
 <script>fetch("https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(location.hostname)+"&p="+encodeURIComponent(location.pathname)).catch(()=>{})</script>
-
 <!-- AdSense 响应式广告 -->
 <div style="text-align:center;margin:20px auto;max-width:970px;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-8346383990981353"
-       data-ad-slot="4014087267"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8346383990981353" data-ad-format="auto" data-ad-slot="4014087267" data-full-width-responsive="true" style="display:block"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
 <section class="faq-section" style="max-width:800px;margin:40px auto;padding:0 16px">
-  <h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
-  </details>
+<h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
+</details>
 </section>
 </body>
 </html>

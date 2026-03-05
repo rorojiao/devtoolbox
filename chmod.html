@@ -1,29 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>Linux File Permission Calculator Online — DevToolBox</title>
-<meta name="description" content="Calculate Linux/Unix file permissions in octal and symbolic notation. Generate chmod commands instantly. Free online tool.">
-<meta name="keywords" content="chmod计算器,Linux权限">
-<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/chmod.html">
-<link rel="stylesheet" href="style.css">
-<meta property="og:title" content="Linux权限计算器 | DevToolbox">
-<meta property="og:description" content="chmod数字与rwx互转。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/chmod.html">
-<meta property="og:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
-<meta name="twitter:card" content="summary">
+<meta content="Calculate Linux/Unix file permissions in octal and symbolic notation. Generate chmod commands instantly. Free online tool." name="description"/>
+<meta content="chmod计算器,Linux权限" name="keywords"/>
+<link href="https://rorojiao.github.io/devtoolbox/chmod.html" rel="canonical"/>
+<link href="style.css" rel="stylesheet"/>
+<meta content="Linux权限计算器 | DevToolbox" property="og:title"/>
+<meta content="chmod数字与rwx互转。" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://rorojiao.github.io/devtoolbox/chmod.html" property="og:url"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" property="og:image"/>
+<meta content="summary" name="twitter:card"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Linux权限计算器","url":"https://rorojiao.github.io/devtoolbox/chmod.html","description":"chmod数字与rwx互转。"}</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353" crossorigin="anonymous"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-8346383990981353",
     enable_page_level_ads: true
   });
 </script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -76,15 +76,32 @@
   ]
 }
 </script>
-</head>
+<meta content="DevToolbox" property="og:site_name"/><meta content="Linux File Permission Calculator Online — DevToolBox" name="twitter:title"/><meta content="Calculate Linux/Unix file permissions in octal and symbolic notation. Generate chmod commands instantly. Free online tool." name="twitter:description"/><meta content="https://devtoolbox.vercel.app/og-image.png" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Linux File Permission Calculator Online — DevToolBox",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web Browser",
+  "url": "https://rorojiao.github.io/chmod",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DevToolbox",
+    "url": "https://devtoolbox.vercel.app"
+  }
+}</script></head>
 <body>
 <header class="header"><div class="header-inner">
-<a href="index.html" class="logo">🛠️ DevToolbox 开发工具箱</a>
+<a class="logo" href="index.html">🛠️ DevToolbox 开发工具箱</a>
 <button class="nav-toggle" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
 <nav class="nav"><a href="index.html">首页</a><a href="json.html">JSON</a><a href="base64.html">Base64</a><a href="hash.html">Hash</a><a href="regex.html">正则</a><a href="url-encode.html">URL编码</a><a href="color.html">颜色</a><a href="jwt.html">JWT</a><a href="uuid.html">UUID</a><a href="sql.html">SQL</a></nav>
 </div></header>
 <div class="container">
-<h1>chmod计算器</h1><p class="subtitle">数字↔rwx</p><div class="card"><div class="form-group"><label>chmod数字(如755)</label><input type="text" id="n" value="755" oninput="calc()" maxlength="3"></div><div id="r" style="margin-top:15px;font-size:18px"></div><h3 style="margin-top:20px">可视化</h3><table style="width:100%;text-align:center"><tr><th></th><th>r</th><th>w</th><th>x</th></tr><tr><td>Owner</td><td><input type="checkbox" class="pm" data-p="0" data-v="4" checked onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="0" data-v="2" checked onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="0" data-v="1" checked onchange="fromCb()"></td></tr><tr><td>Group</td><td><input type="checkbox" class="pm" data-p="1" data-v="4" checked onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="1" data-v="2" onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="1" data-v="1" checked onchange="fromCb()"></td></tr><tr><td>Others</td><td><input type="checkbox" class="pm" data-p="2" data-v="4" checked onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="2" data-v="2" onchange="fromCb()"></td><td><input type="checkbox" class="pm" data-p="2" data-v="1" checked onchange="fromCb()"></td></tr></table></div><script>function calc(){const n=document.getElementById("n").value;if(!/^[0-7]{3}$/.test(n))return;const m=n.split("").map(d=>{const v=+d;return(v&4?"r":"-")+(v&2?"w":"-")+(v&1?"x":"-")});document.getElementById("r").innerHTML="符号：<b>"+m.join("")+"</b><br>命令：<code>chmod "+n+" file</code>"}function fromCb(){const d=[0,0,0];document.querySelectorAll(".pm").forEach(c=>{if(c.checked)d[+c.dataset.p]+=+c.dataset.v});document.getElementById("n").value=d.join("");calc()}calc()</script>
+<h1>chmod计算器</h1><p class="subtitle">数字↔rwx</p><div class="card"><div class="form-group"><label>chmod数字(如755)</label><input id="n" maxlength="3" oninput="calc()" type="text" value="755"/></div><div id="r" style="margin-top:15px;font-size:18px"></div><h3 style="margin-top:20px">可视化</h3><table style="width:100%;text-align:center"><tr><th></th><th>r</th><th>w</th><th>x</th></tr><tr><td>Owner</td><td><input checked="" class="pm" data-p="0" data-v="4" onchange="fromCb()" type="checkbox"/></td><td><input checked="" class="pm" data-p="0" data-v="2" onchange="fromCb()" type="checkbox"/></td><td><input checked="" class="pm" data-p="0" data-v="1" onchange="fromCb()" type="checkbox"/></td></tr><tr><td>Group</td><td><input checked="" class="pm" data-p="1" data-v="4" onchange="fromCb()" type="checkbox"/></td><td><input class="pm" data-p="1" data-v="2" onchange="fromCb()" type="checkbox"/></td><td><input checked="" class="pm" data-p="1" data-v="1" onchange="fromCb()" type="checkbox"/></td></tr><tr><td>Others</td><td><input checked="" class="pm" data-p="2" data-v="4" onchange="fromCb()" type="checkbox"/></td><td><input class="pm" data-p="2" data-v="2" onchange="fromCb()" type="checkbox"/></td><td><input checked="" class="pm" data-p="2" data-v="1" onchange="fromCb()" type="checkbox"/></td></tr></table></div><script>function calc(){const n=document.getElementById("n").value;if(!/^[0-7]{3}$/.test(n))return;const m=n.split("").map(d=>{const v=+d;return(v&4?"r":"-")+(v&2?"w":"-")+(v&1?"x":"-")});document.getElementById("r").innerHTML="符号：<b>"+m.join("")+"</b><br>命令：<code>chmod "+n+" file</code>"}function fromCb(){const d=[0,0,0];document.querySelectorAll(".pm").forEach(c=>{if(c.checked)d[+c.dataset.p]+=+c.dataset.v});document.getElementById("n").value=d.join("");calc()}calc()</script>
 </div>
 <div class="more-tools" style="max-width:800px;margin:40px auto;padding:20px;background:#f8f9fa;border-radius:12px;text-align:center">
 <h3 style="margin-bottom:12px">🔗 更多免费工具</h3>
@@ -99,32 +116,25 @@
 <div style="text-align:center;margin:20px auto;max-width:728px;"><iframe data-aa="2427662" src="//acceptable.a-ads.com/2427662/?size=Adaptive" style="border:0;padding:0;width:100%;height:auto;min-height:60px;overflow:hidden;display:block;margin:auto;"></iframe></div>
 <footer class="footer">© 2026 DevToolbox 开发工具箱</footer>
 <script>fetch("https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(location.hostname)+"&p="+encodeURIComponent(location.pathname)).catch(()=>{})</script>
-
 <!-- AdSense 响应式广告 -->
 <div style="text-align:center;margin:20px auto;max-width:970px;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-8346383990981353"
-       data-ad-slot="4014087267"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8346383990981353" data-ad-format="auto" data-ad-slot="4014087267" data-full-width-responsive="true" style="display:block"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
 <section class="faq-section" style="max-width:800px;margin:40px auto;padding:0 16px">
-  <h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
-  </details>
+<h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
+</details>
 </section>
 </body>
 </html>

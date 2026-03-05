@@ -1,10 +1,11 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>CSS Gradient Generator — DevToolBox</title>
-<meta name="description" content="Free online CSS gradient generator. Create beautiful linear and radial gradients with real-time preview and copy CSS code.">
-<meta name="keywords" content="css gradient generator, linear gradient, radial gradient, css gradient tool, gradient maker online">
-<link rel="canonical" href="https://rorojiao.github.io/devtoolbox/css-gradient.html">
-<link rel="stylesheet" href="style.css">
+<meta content="Free online CSS gradient generator. Create beautiful linear and radial gradients with real-time preview and copy CSS code." name="description"/>
+<meta content="css gradient generator, linear gradient, radial gradient, css gradient tool, gradient maker online" name="keywords"/>
+<link href="https://rorojiao.github.io/devtoolbox/css-gradient.html" rel="canonical"/>
+<link href="style.css" rel="stylesheet"/>
 <style>
 .info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:.85em;color:var(--text2);line-height:1.6}
 .info-box summary{color:var(--accent);cursor:pointer;font-weight:700}
@@ -25,23 +26,22 @@
 input[type=range]{accent-color:var(--accent);width:100%}
 select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:var(--radius);font-family:var(--mono);font-size:.85em;width:100%}
 </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353" crossorigin="anonymous"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8346383990981353"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-8346383990981353",
     enable_page_level_ads: true
   });
 </script>
-
-<meta property="og:title" content="CSS Gradient Generator — DevToolBox">
-<meta property="og:description" content="Create beautiful CSS gradients online. Generate linear, radial, and conic gradient CSS code instantly with a visual editor.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rorojiao.github.io/devtoolbox/css-gradient.html">
-<meta property="og:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CSS Gradient Generator — DevToolBox">
-<meta name="twitter:description" content="Create beautiful CSS gradients online. Generate linear, radial, and conic gradient CSS code instantly with a visual editor.">
-<meta name="twitter:image" content="https://rorojiao.github.io/devtoolbox/og-image.png">
+<meta content="CSS Gradient Generator — DevToolBox" property="og:title"/>
+<meta content="Create beautiful CSS gradients online. Generate linear, radial, and conic gradient CSS code instantly with a visual editor." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://rorojiao.github.io/devtoolbox/css-gradient.html" property="og:url"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="CSS Gradient Generator — DevToolBox" name="twitter:title"/>
+<meta content="Create beautiful CSS gradients online. Generate linear, radial, and conic gradient CSS code instantly with a visual editor." name="twitter:description"/>
+<meta content="https://rorojiao.github.io/devtoolbox/og-image.png" name="twitter:image"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -110,7 +110,7 @@ select{background:var(--surface);border:1px solid var(--border);color:var(--text
   ]
 }
 </script>
-</head><body>
+<meta content="DevToolbox" property="og:site_name"/></head><body>
 <header><div class="logo"><span>Dev</span>ToolBox 🛠️</div><nav id="nav"></nav></header>
 <div class="container">
 <h1>CSS Gradient Generator</h1>
@@ -119,28 +119,28 @@ select{background:var(--surface);border:1px solid var(--border);color:var(--text
 </details>
 <div class="preview" id="preview"></div>
 <div class="controls">
-  <div class="control-group">
-    <label>Gradient Type</label>
-    <select id="type" onchange="update()"><option value="linear">Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select>
-    <label style="margin-top:12px">Angle (linear/conic)</label>
-    <input type="range" id="angle" min="0" max="360" value="90" oninput="update()">
-    <span id="angleVal" style="font-size:.85em;color:var(--text2)">90°</span>
-  </div>
-  <div class="control-group">
-    <label>Color Stops</label>
-    <div class="color-stops" id="stops"></div>
-    <button class="btn btn-secondary" style="margin-top:8px;width:100%" onclick="addStop()">+ Add Stop</button>
-  </div>
+<div class="control-group">
+<label>Gradient Type</label>
+<select id="type" onchange="update()"><option value="linear">Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select>
+<label style="margin-top:12px">Angle (linear/conic)</label>
+<input id="angle" max="360" min="0" oninput="update()" type="range" value="90"/>
+<span id="angleVal" style="font-size:.85em;color:var(--text2)">90°</span>
+</div>
+<div class="control-group">
+<label>Color Stops</label>
+<div class="color-stops" id="stops"></div>
+<button class="btn btn-secondary" onclick="addStop()" style="margin-top:8px;width:100%">+ Add Stop</button>
+</div>
 </div>
 <div class="code-output" id="code"></div>
 <div class="toolbar">
-  <button class="btn btn-copy" onclick="copyText($('#code').textContent)">Copy CSS</button>
-  <button class="btn btn-secondary" onclick="randomGradient()">🎲 Random</button>
+<button class="btn btn-copy" onclick="copyText($('#code').textContent)">Copy CSS</button>
+<button class="btn btn-secondary" onclick="randomGradient()">🎲 Random</button>
 </div>
 <div style="text-align:center;margin-top:30px"><a href="index.html" style="color:var(--accent)">← Back to Home</a></div>
 <div class="tool-links">
-  <a href="json-formatter.html">JSON</a><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a>
-  <a href="hash-generator.html">Hash</a><a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-shadow.html">CSS Shadow</a>
+<a href="json-formatter.html">JSON</a><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encode</a>
+<a href="hash-generator.html">Hash</a><a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a><a href="css-shadow.html">CSS Shadow</a>
 </div>
 </div>
 <footer id="footer"></footer>
@@ -183,31 +183,24 @@ function renderPage(){renderNav('');renderFooter()}
 renderPage();
 </script>
 <script>(function(){var s=location.hostname,p=location.pathname;new Image().src="https://site-analytics.cap.1ktower.com/hit?s="+encodeURIComponent(s)+"&p="+encodeURIComponent(p)+"&t="+Date.now()})()</script>
-
 <!-- AdSense 响应式广告 -->
 <div style="text-align:center;margin:20px auto;max-width:970px;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-8346383990981353"
-       data-ad-slot="4014087267"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8346383990981353" data-ad-format="auto" data-ad-slot="4014087267" data-full-width-responsive="true" style="display:block"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
 <section class="faq-section" style="max-width:800px;margin:40px auto;padding:0 16px">
-  <h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
-  </details>
-  <details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
-    <summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
-    <p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
-  </details>
+<h2 style="font-size:1.3em;margin-bottom:16px;color:var(--text,#e0e0e0)">Frequently Asked Questions</h2>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">What is DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox is a free collection of online developer tools including JSON formatter, Base64 encoder/decoder, regex tester, hash generator, JWT decoder, timestamp converter, and more — all running entirely in your browser with no server-side processing.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Are the developer tools on DevToolBox free to use?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">Yes, all tools on DevToolBox are completely free with no registration required. All data processing happens client-side in your browser, so your data never leaves your machine.</p>
+</details>
+<details style="border:1px solid var(--border,#333);border-radius:8px;margin-bottom:10px;padding:12px 16px">
+<summary style="cursor:pointer;font-weight:600;color:var(--accent,#00d672)">Which developer tools are available on DevToolBox?</summary>
+<p style="margin-top:10px;color:var(--text2,#aaa);line-height:1.6">DevToolBox offers tools for JSON formatting, Base64 encoding/decoding, regex testing, hash generation (MD5, SHA-1, SHA-256, SHA-512), JWT decoding, timestamp conversion, URL encoding, CSS gradient and shadow generation, text diff, QR code generation, cron expression building, SQL formatting, chmod calculation, and more.</p>
+</details>
 </section>
 </body></html>
